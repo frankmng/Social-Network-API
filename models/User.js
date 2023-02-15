@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
 // Schema for User model
 const userSchema = new Schema(
@@ -17,15 +18,15 @@ const userSchema = new Schema(
       },
       thoughts: [
         {
-          type: Schema.Types.ObjectId,
+					type: mongoose.Schema.Types.ObjectId,
           ref: 'Thoughts',
 					default: [],
         },
       ],
       friends: [
         {
-          type: Schema.Types.ObjectId,
-          ref: 'User',
+					type: mongoose.Schema.Types.ObjectId,
+					ref: 'User',
 					default: [],
         }
       ],
@@ -40,9 +41,10 @@ const userSchema = new Schema(
 // Virtual property to get count of friends per user
 userSchema
 	.virtual('friendCount')
-	.get(() => {
+	.get(function(){
 			return this.friends.length
-})
+});
+
 
 // Initialize our model
 const User = model('user', userSchema);

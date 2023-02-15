@@ -1,4 +1,4 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // Schema for User model
 const userSchema = new Schema(
@@ -19,12 +19,14 @@ const userSchema = new Schema(
         {
           type: Schema.Types.ObjectId,
           ref: 'Thoughts',
+					default: [],
         },
       ],
       friends: [
         {
           type: Schema.Types.ObjectId,
           ref: 'User',
+					default: [],
         }
       ],
     },
@@ -44,4 +46,5 @@ userSchema
 
 // Initialize our model
 const User = model('user', userSchema);
+
 module.exports = User;

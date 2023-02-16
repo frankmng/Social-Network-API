@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 connection.on('error', (err) => err);
 
@@ -8,7 +8,8 @@ connection.once('open', async () => {
 
 	// Drop existing users
 	await User.deleteMany({});
-	
+	await Thought.deleteMany({});
+
 	const users = [
 		{
 			username: 'magic_mike',
@@ -17,6 +18,17 @@ connection.once('open', async () => {
 		{
 			username: 'silly_willy',
 			email: 'silly_willy@email.com',
+		}
+	];
+
+	const thoughts = [
+		{
+			thoughtText: 'This is a great thought!',
+			username: 'magic_mike'
+		},
+		{
+			thoughtText: 'Wow, what a great thought!',
+			username: 'silly_willy'
 		}
 	];
 
@@ -36,8 +48,10 @@ connection.once('open', async () => {
 	// 	email,
 	// });
 	await User.collection.insertMany(users);
+	await Thought.collection.insertMany(thoughts);
 
   console.table(users);
-  console.info('Seeding complete! 🌱');
+  console.table(thoughts);
+	console.info('Seeding complete! 🌱');
   process.exit(0);
 })
